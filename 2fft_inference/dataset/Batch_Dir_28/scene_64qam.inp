@@ -1,0 +1,136 @@
+signal_type        DQAM
+%%%%% DQAM Parameters %%%%%
+bits_per_symbol    6
+constellation      qam
+pulse_type         sqrt_nyq
+pulse_BW           1.000000e+00
+pulse_tail_exp     -3
+pulse_len_sym      6
+real_freq_shift    0
+rise_time          2.000000e+01
+dsss_PN_class      mlsr
+multi_seq          00000000000000000000
+dsss_L             1
+mlsr_m             8
+mlsr_pad           2
+mlsr_rot           0
+mlsr_ind           1
+mlsr_ind2          1
+gold_ind           0
+gold_ind2          0
+kasami_ind         0
+kasami_ind2        0
+walsh_ind          0
+walsh_ind2         0
+qam_imbal          1.000000e+00
+cross_talk_iq      0.000000e+00
+sym_err_var        0.000000e+00
+jitter_interval    0.000000e+00
+pilot_length       0
+frame_length       0
+pilot_freq        0.000000e+00
+pilot_pow         -3.000000e+02
+pilot_type        normal
+%%%%% SINUSOID Parameters %%%%%
+amplitude          1.000000e+00
+%%%%% FM Parameters %%%%%
+fm_index           2.500000e+00
+fm_bw              2.000000e-02
+fm_sine_freq       0.000000e+00
+fm_sine_amp        0.000000e+00
+%%%%% AM Parameters %%%%%
+side_band          0
+ssb_bw             1.000000e-01
+dsb_index          0.000000e+00
+AM_messageType     gaussian
+%%%%% FSK Parameters %%%%%
+pulse_type         rect
+phase_type         cont
+freq_dev           1.200000e-01
+fdT0_prod          0.000000e+00
+cpfsk_index        5.000000e-01
+cpm_M              2
+cpm_multih         1
+cpm_L              1
+cpm_mlsr_m         8
+cpm_mlsr_ind       1
+lsrc_beta          1.000000e+00
+TB                 3.000000e-01
+coherency          1
+M_fsk              2
+%%%%% RADAR Parameters %%%%%
+radar_bw           2.000000e-01
+pri                8192
+pul_width          128
+radar_n_chips      64
+radar_pad          5
+radar_type         LFM
+%%%%% HOPPER Parameters %%%%%
+bits_per_hop       128
+fh_freq_dev        3.515625e-03
+num_hop_freqs      64
+hop_freq_sep       7.031250e-03
+hop_type           single_channel
+fh_radio_type      sincgars
+spinDelay          0
+fh_duty_cycle      9.000000e-01
+random_hop_len     0
+%%%%% TG Parameters %%%%%
+tg_doppler         0.000000e+00
+burst_type         normal
+frame_type         burst
+tsc                0
+mask_flag          1
+ts_output          0
+slot_selector      11111111
+guard_type         quarter-bit
+tg_mod_type        gmsk
+%%%%% OFDM Parameters %%%%%
+OFDM_CP     0
+OFDM_nfft          1024
+OFDM_const_type    4
+OFDM_power_type    flat
+OFDM_power_range_dB -1.000000e+00
+OFDM_pilots        0
+OFDM_num_unused    0
+OFDM_oversample    2
+OFDM_synch_len     0
+OFDM_num_synch     0
+OFDM_synch_start   0
+OFDM_n             8_7
+OFDM_BW            1.750000e+06
+OFDM_system_flag   -2
+%%%%% TDMA Parameters %%%%%
+TDMA_Ts            256
+TDMA_Tg            1.600000e+01
+TDMA_F             6
+TDMA_sig_type      DQAM
+TDMA_clock_coh     1
+TDMA_carrier_coh   0
+TDMA_slot_jitter   0.000000e+00
+TDMA_offset_range  0.000000e+00
+TDMA_slots         100000
+TDMA_ran_pow       0
+TDMA_pow_range     0.000000e+00
+%%%%% IEEE_802_11g Parameters %%%%%
+IEEE_80211g_rate   1.000000e+06
+%%%%% GENERAL Parameters %%%%%
+nsamples           4096
+samples_per_symbol 16
+carrier_freq       2.500000e-01
+delay_samples      0.000000e+00
+phase_deg          0.000000e+00
+over_sample        1
+under_sample       1
+signal_power_dB    0.000000e+00
+noise_power_dB     -1.000000e+20
+cgn_flag           0
+ASCII_or_binary    binary
+real_output        0
+time_output        1
+freq_output        0
+pul_output         0
+sym_output         0
+bit_output         0
+stat_output        0
+byt_output         0

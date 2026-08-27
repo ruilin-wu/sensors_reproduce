@@ -1,0 +1,97 @@
+#!/bin/csh
+
+if ($#argv < 4) then
+   echo "Usage: create_data_sets num_instances seed1 seed2 offset"
+   exit
+endif
+
+set num_instances = $1
+set seed1 = $2
+set seed2 = $3
+set offset = $4
+
+set T = 32768
+set N0 = 0.0
+#set minT0 = 2
+#set maxT0 = 16
+set minT0 = 2
+set maxT0 = 20
+#set minPs = 0.0
+#set maxPs = 20.0
+set minPs = 0.0
+set maxPs = 6.0
+#set fmin = -0.001
+#set fmax = 0.001
+set fmin = 0.01
+set fmax = 0.02
+
+scene noise
+
+/bin/rm -f create.done >& /dev/null
+/bin/rm -f signal_record.txt >& /dev/null
+touch signal_record.txt
+
+set ind = 1
+set jnd = $offset
+while ($ind <= $num_instances)
+
+   set T0 = `Cscale -t $minT0 $maxT0 -R -I -s $seed1 scene_noise.tim`
+   @ seed1 += 2
+   set f_ind = `Cscale -t 1 5 -R -I -s $seed1 scene_noise.tim`
+   @ seed1 += 2
+   set ebw = `Cscale -t 0.1 1.0 -R -s $seed1 scene_noise.tim`
+   @ seed1 += 2
+   set Ps = `Cscale -t $minPs $maxPs -R -s $seed1 scene_noise.tim`
+   @ seed1 += 2
+   set fc = `Cscale -t $fmin $fmax -R -s $seed1 scene_noise.tim`
+   @ seed1 += 2
+   set Tout = `Cscale -t 1 10 -R -I -s $seed1 scene_noise.tim`
+   @ Tin = $Tout
+   @ Tin++
+   if ($Tout == 1) then
+      set Tin = 1
+   endif
+   @ seed1 += 2
+
+   foreach sig_type (bpsk qpsk 8psk dqpsk msk 16qam 64qam 256qam)
+      echo "$jnd $sig_type  $T0  $fc  $ebw  $Tin  $Tout  $Ps  $N0 " >> signal_record.txt
+
+      scene -collect $T -snr -1000.0 -pulse_BW $ebw -Ps $Ps -T $T0 -fc 0.0 \
+            -bits -$seed1 -noise -$seed2 $sig_type
+
+      resamp -fi scene_"$sig_type".tim -fo tmp.tim -Tin $Tin -Tout $Tout
+      combine -e 1 $T tmp.tim scene_"$sig_type".tim
+      normalize scene_"$sig_type".tim
+
+      set Ps_lin = `dB2linear $Ps`
+
+      echo "scale = 10" >! bc.rm
+      echo "sqrt($Ps_lin)" >> bc.rm
+      echo "quit" >> bc.rm
+      set amp_lin = `bc -l bc.rm`
+      /bin/rm -f bc.rm
+
+      freq_shift -D -f $fc -o tmp.tim -T scene_"$sig_type".tim
+      /bin/mv tmp.tim scene_"$sig_type".tim
+      conj scene_"$sig_type".tim tmp.tim
+      /bin/mv tmp.tim scene_"$sig_type".tim
+
+      mult scene_"$sig_type".tim $amp_lin
+
+      scene -collect $T -snr $N0 -Ps -1000.0 -noise -$seed2 noise
+      combine scene_noise.tim scene_"$sig_type".tim tmp.tim
+      /bin/mv tmp.tim scene_"$sig_type".tim
+
+      /bin/mv scene_"$sig_type".tim signal_"$jnd".tim
+
+      @ seed1 += 2
+      @ seed2 += 2
+      @ jnd++
+   end
+
+   @ ind++
+end
+
+touch ./create.done
+
+exit

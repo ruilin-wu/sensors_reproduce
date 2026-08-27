@@ -1,0 +1,5 @@
+char   fi      = scene_256qam.tim //input data file name
+char   fo      = tmp.tim         //output data file name
+double Tin     = 10  //input sampling interval (seconds)
+double Tout    = 9  //output sampling interval (seconds)
+double advance = 0        //time advance (>= 0)(seconds)
