@@ -1,0 +1,56 @@
+This is BibTeX, Version 0.99e (TeX Live 2026)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: cohortround_intro_en.aux
+The style file: IEEEtran.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: references.bib
+-- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+
+Done.
+You've used 8 entries,
+            4087 wiz_defined-function locations,
+            877 strings with 9104 characters,
+and the built_in function-call counts, 7428 in all, are:
+= -- 587
+> -- 189
+< -- 70
++ -- 104
+- -- 32
+* -- 379
+:= -- 1073
+add.period$ -- 18
+call.type$ -- 8
+change.case$ -- 8
+chr.to.int$ -- 162
+cite$ -- 8
+duplicate$ -- 509
+empty$ -- 580
+format.name$ -- 39
+if$ -- 1729
+int.to.chr$ -- 0
+int.to.str$ -- 8
+missing$ -- 91
+newline$ -- 49
+num.names$ -- 8
+pop$ -- 203
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 2
+skip$ -- 567
+stack$ -- 0
+substring$ -- 386
+swap$ -- 438
+text.length$ -- 16
+text.prefix$ -- 0
+top$ -- 5
+type$ -- 8
+warning$ -- 0
+while$ -- 36
+width$ -- 9
+write$ -- 106

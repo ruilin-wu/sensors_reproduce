@@ -1,0 +1,10 @@
+[debug] Created transactional ClassFileManager with tempDir = /home/ruilin/SPL_Surreal/DAC/02_cohortround/artifact/chisel/target/scala-2.13/test-classes.bak
+[debug] About to delete class files:
+[debug] We backup class files:
+[debug] Created transactional ClassFileManager with tempDir = /home/ruilin/SPL_Surreal/DAC/02_cohortround/artifact/chisel/target/scala-2.13/test-classes.bak
+[debug] About to delete class files:
+[debug] We backup class files:
+[debug] Registering generated classes:
+[debug] 	CohortRound4Spec.class
+[debug] 	CohortRoundBaselineSpec.class
+[debug] Removing the temporary directory used for backing up class files: /home/ruilin/SPL_Surreal/DAC/02_cohortround/artifact/chisel/target/scala-2.13/test-classes.bak

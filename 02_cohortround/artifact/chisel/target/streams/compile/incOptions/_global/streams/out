@@ -1,0 +1,37 @@
+[debug] Created transactional ClassFileManager with tempDir = /home/ruilin/SPL_Surreal/DAC/02_cohortround/artifact/chisel/target/scala-2.13/classes.bak
+[debug] About to delete class files:
+[debug] We backup class files:
+[debug] Created transactional ClassFileManager with tempDir = /home/ruilin/SPL_Surreal/DAC/02_cohortround/artifact/chisel/target/scala-2.13/classes.bak
+[debug] About to delete class files:
+[debug] We backup class files:
+[debug] Registering generated classes:
+[debug] 	FullPrecisionDotProduct24.class
+[debug] 	CohortRound4Selector$.class
+[debug] 	DigitSerialMAC$$anon$1.class
+[debug] 	EmitCohortRoundBaselines.class
+[debug] 	EmitCohortRound4.class
+[debug] 	NarrowCohortDotProduct24.class
+[debug] 	EmitCohortRound4$.class
+[debug] 	CohortRound4Selector$$anon$2.class
+[debug] 	CohortRound4Combinational$$anon$1.class
+[debug] 	DigitSerialMACMain$.class
+[debug] 	DigitSerialMACMain$delayedInit$body.class
+[debug] 	SignedDigitSerialMultiplier.class
+[debug] 	CohortRound4Combinational$.class
+[debug] 	DigitSerialMACMain.class
+[debug] 	GeneratedCohortDot24.class
+[debug] 	CohortRound4Selector.class
+[debug] 	EmitCohortRoundBaselines$delayedInit$body.class
+[debug] 	RoundedDotProduct24Baseline.class
+[debug] 	DigitSerialMAC$.class
+[debug] 	IndependentRoundDotProduct24.class
+[debug] 	EmitCohortRoundBaselines$.class
+[debug] 	NarrowCohortDotProduct$.class
+[debug] 	SignedDigitSerialMultiplier$$anon$1.class
+[debug] 	NarrowCohortDotProduct.class
+[debug] 	RoundedDotProduct24Baseline$$anon$1.class
+[debug] 	NarrowCohortDotProduct$$anon$3.class
+[debug] 	CohortRound4Combinational.class
+[debug] 	DigitSerialMAC.class
+[debug] 	EmitCohortRound4$delayedInit$body.class
+[debug] Removing the temporary directory used for backing up class files: /home/ruilin/SPL_Surreal/DAC/02_cohortround/artifact/chisel/target/scala-2.13/classes.bak

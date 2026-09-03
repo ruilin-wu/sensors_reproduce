@@ -1,0 +1,3 @@
+DigitSerialMAC.sv
+SignedDigitSerialMultiplier.sv
+IndependentRoundDotProduct24.sv

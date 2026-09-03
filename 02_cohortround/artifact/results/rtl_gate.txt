@@ -1,0 +1,19 @@
+CohortRound self-contained Chisel/Verilator gate
+Date: 2026-09-03
+Simulator: Verilator 5.050
+Command: testOnly CohortRound4Spec CohortRoundBaselineSpec
+
+CohortRound4Spec:
+[PASS] exhaustive p=3 midpoint-count oracle (4096 input states)
+[PASS] exactly one registered cycle of latency and bubble preservation
+[PASS] 24-term datapath against the independent signed integer oracle
+
+CohortRoundBaselineSpec:
+[PASS] independent per-product round-to-nearest-even baseline
+[PASS] full-precision accumulation followed by one RNE baseline
+
+Suites completed: 2
+Tests succeeded: 5
+Tests failed: 0
+Exit code: 0
+Wall-clock test run reported by ScalaTest: 33.650 seconds

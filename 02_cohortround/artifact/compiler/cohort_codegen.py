@@ -1,0 +1,120 @@
+"""Recognition and Chisel lowering for the first CohortRound compiler path.
+
+This deliberately supports one small, testable surface rather than silently
+accepting general Python: a kernel that directly returns a real fixed-point
+dot product expressed with ``cohort_mac_reduce``.  More DSP patterns can be
+canonicalized to this intrinsic after this numerical/RTL contract is stable.
+"""
+
+from __future__ import annotations
+import ast
+from dataclasses import dataclass
+from dsk_types import ArrayType, FixedType, parse_type
+
+
+class CohortCodegenError(ValueError):
+    pass
+
+
+@dataclass(frozen=True)
+class CohortKernel:
+    class_name: str
+    a_name: str
+    b_name: str
+    n: int
+    width: int
+    input_frac: int
+    term_frac: int
+    cohort_size: int
+    prefix_bits: int
+    out_width: int
+    out_frac: int
+    digit_width: int
+
+
+def _literal(node: ast.AST, label: str) -> int:
+    if not isinstance(node, ast.Constant) or not isinstance(node.value, int):
+        raise CohortCodegenError(f"{label} must be an integer literal")
+    return node.value
+
+
+def recognize(source: str, class_name: str = "GeneratedCohortDotProduct") -> CohortKernel:
+    tree = ast.parse(source)
+    funcs = [n for n in tree.body if isinstance(n, ast.FunctionDef)]
+    if len(funcs) != 1:
+        raise CohortCodegenError("expected exactly one function")
+    fn = funcs[0]
+    if len(fn.body) != 1 or not isinstance(fn.body[0], ast.Return):
+        raise CohortCodegenError("kernel must directly return cohort_mac_reduce(...)")
+    call = fn.body[0].value
+    if not (isinstance(call, ast.Call) and isinstance(call.func, ast.Name)
+            and call.func.id == "cohort_mac_reduce"):
+        raise CohortCodegenError("return expression must be cohort_mac_reduce(...)")
+    if len(call.args) != 2 or not isinstance(call.args[1], ast.Lambda):
+        raise CohortCodegenError("cohort_mac_reduce requires (literal n, one-argument lambda)")
+
+    n = _literal(call.args[0], "n")
+    lam = call.args[1]
+    if len(lam.args.args) != 1:
+        raise CohortCodegenError("reduction lambda must have one index")
+    idx = lam.args.args[0].arg
+    body = lam.body
+    if not isinstance(body, ast.BinOp) or not isinstance(body.op, ast.Mult):
+        raise CohortCodegenError("reduction body must be a[i] * b[i]")
+
+    def indexed_name(expr: ast.AST) -> str:
+        if not (isinstance(expr, ast.Subscript) and isinstance(expr.value, ast.Name)
+                and isinstance(expr.slice, ast.Name) and expr.slice.id == idx):
+            raise CohortCodegenError("reduction operands must be arrays indexed by the lambda index")
+        return expr.value.id
+
+    a_name, b_name = indexed_name(body.left), indexed_name(body.right)
+    annotations = {a.arg: parse_type(a.annotation) for a in fn.args.args}
+    if a_name not in annotations or b_name not in annotations:
+        raise CohortCodegenError("lambda arrays must be function arguments")
+    at, bt = annotations[a_name], annotations[b_name]
+    if not (isinstance(at, ArrayType) and isinstance(bt, ArrayType)
+            and isinstance(at.elem, FixedType) and isinstance(bt.elem, FixedType)):
+        raise CohortCodegenError("both inputs must be Array[Fixed[w,f], n]")
+    if at != bt or at.dims != (n,):
+        raise CohortCodegenError("input types and literal n must agree")
+    ret = parse_type(fn.returns)
+    if not isinstance(ret, FixedType):
+        raise CohortCodegenError("return type must be Fixed[w,f]")
+
+    opts = {kw.arg: _literal(kw.value, kw.arg) for kw in call.keywords}
+    unknown = set(opts) - {"term_frac", "cohort_size", "prefix_bits"}
+    if unknown:
+        raise CohortCodegenError(f"unsupported options: {sorted(unknown)}")
+    if "term_frac" not in opts:
+        raise CohortCodegenError("term_frac is required")
+    cohort_size = opts.get("cohort_size", 4)
+    prefix_bits = opts.get("prefix_bits", 3)
+    if cohort_size != 4 or n <= 0 or n % 4:
+        raise CohortCodegenError("first lowering requires n divisible by four and cohort_size=4")
+    if ret.frac != opts["term_frac"]:
+        raise CohortCodegenError("return frac must equal term_frac in the first lowering")
+    if 2 * at.elem.frac - opts["term_frac"] < prefix_bits:
+        raise CohortCodegenError("discarded product field is too small for the prefix")
+
+    digit_width = 4
+    for dec in fn.decorator_list:
+        if isinstance(dec, ast.Call) and getattr(dec.func, "id", None) == "kernel":
+            for kw in dec.keywords:
+                if kw.arg == "digit_width":
+                    digit_width = _literal(kw.value, "digit_width")
+    return CohortKernel(class_name, a_name, b_name, n, at.elem.width,
+                        at.elem.frac, opts["term_frac"], cohort_size,
+                        prefix_bits, ret.width, ret.frac, digit_width)
+
+
+def generate_chisel(kernel: CohortKernel) -> str:
+    k = kernel
+    return f'''// AUTO-GENERATED by compiler/cohort_codegen.py
+import chisel3._
+
+class {k.class_name} extends NarrowCohortDotProduct(
+  n = {k.n}, width = {k.width}, inputFrac = {k.input_frac},
+  termFrac = {k.term_frac}, prefixBits = {k.prefix_bits},
+  outWidth = {k.out_width}, digitWidth = {k.digit_width})
+'''

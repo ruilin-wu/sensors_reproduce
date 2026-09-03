@@ -1,0 +1,14 @@
+Vivado Tcl control-flow check
+Date: 2026-09-03
+Interpreter: tclsh with Vivado commands mocked
+
+[PASS] NarrowCohortDotProduct24 path and report-directory dispatch
+[PASS] IndependentRoundDotProduct24 path and report-directory dispatch
+[PASS] FullPrecisionDotProduct24 path and report-directory dispatch
+
+Default part: xczu7ev-ffvc1156-2-e
+Exit code: 0
+
+This check validates ordinary Tcl syntax, all-three-top iteration, RTL directory
+selection, and report directory construction. It does not validate Vivado
+command semantics and must not be reported as synthesis or implementation.

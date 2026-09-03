@@ -1,0 +1,14 @@
+CohortRound self-contained compiler/Python gate
+Date: 2026-09-03
+Command: cd artifact/compiler && python3 test_cohort_round.py
+
+[ ok ] exhaustive 4-term/p=3 selector: 4096 cases
+[ ok ] interpreter matches independent oracle: directed + 2000 random
+[ ok ] formal cell-endpoint selector bound <= 0.75 delta
+[ ok ] meta/kernel boundary checker accepts the new hardware intrinsic
+[ ok ] compiler recognizes the canonical DSK kernel
+[ ok ] lowering instantiates the narrow CohortRound RTL
+[ ok ] unsupported cohort shape fails closed
+
+CohortRound pre-Vivado gates: 7 passed, 0 failed
+Exit code: 0

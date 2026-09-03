@@ -1,0 +1,3 @@
+DigitSerialMAC.sv
+SignedDigitSerialMultiplier.sv
+FullPrecisionDotProduct24.sv

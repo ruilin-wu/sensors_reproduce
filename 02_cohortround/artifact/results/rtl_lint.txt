@@ -1,0 +1,17 @@
+CohortRound generated-SystemVerilog lint gate
+Date: 2026-09-03
+Tool: Verilator 5.050 (conda-forge build)
+
+[PASS] NarrowCohortDotProduct24, exit code 0
+  Expected warning: unused multiplier result bits [45:32,11:0].
+  Bits [45:32] are multiplier guard bits; [11:0] are deliberately discarded
+  residue bits below the retained 3-bit prefix.
+
+[PASS] IndependentRoundDotProduct24, exit code 0
+  Expected warning: unused multiplier guard bits [45:32].
+
+[PASS] FullPrecisionDotProduct24, exit code 0
+  Expected warning: unused multiplier guard bits [45:32].
+
+No syntax, width, combinational-loop, latch, or unsupported-construct error was
+reported. Warnings were retained in the gate rather than globally suppressed.

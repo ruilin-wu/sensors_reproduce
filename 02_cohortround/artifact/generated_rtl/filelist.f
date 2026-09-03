@@ -1,0 +1,4 @@
+DigitSerialMAC.sv
+SignedDigitSerialMultiplier.sv
+CohortRound4Combinational.sv
+NarrowCohortDotProduct24.sv

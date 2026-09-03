@@ -1,0 +1,19 @@
+[debug] Running TaskDef(CohortRound4Spec, org.scalatest.tools.Framework$$anon$1@502508d4, false, [SuiteSelector])
+[info] CohortRound4Spec:
+[info] CohortRound4
+[info] - should exhaustively implement the p=3 midpoint-count oracle
+[info] - should have exactly one registered cycle of latency and preserve bubbles
+[info] - should match the independent integer oracle on random and signed boundary products
+[debug] Running TaskDef(CohortRoundBaselineSpec, org.scalatest.tools.Framework$$anon$1@502508d4, false, [SuiteSelector])
+[info] CohortRoundBaselineSpec:
+[info] CohortRound matched baselines
+[info] - should match independent per-product RNE
+[info] - should match full-precision accumulation followed by one RNE
+[info] Run completed in 33 seconds, 650 milliseconds.
+[info] Total number of tests run: 5
+[info] Suites: completed 2, aborted 0
+[info] Tests: succeeded 5, failed 0, canceled 0, ignored 0, pending 0
+[info] All tests passed.
+[debug] Passed tests:
+[debug] 	CohortRoundBaselineSpec
+[debug] 	CohortRound4Spec
